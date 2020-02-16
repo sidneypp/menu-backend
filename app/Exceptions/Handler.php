@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Models\Error;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -50,6 +53,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof ValidationException) {
+            $error = (new Error())
+                ->withShortMessage('data_invalid')
+                ->withMessage($exception->validator->errors()->first());
+
+            return response($error, Response::HTTP_BAD_REQUEST);
+        }
+
         return parent::render($request, $exception);
     }
 }
