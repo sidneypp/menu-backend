@@ -4,8 +4,10 @@ namespace App\Exceptions;
 
 use App\Models\Error;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
@@ -59,6 +61,20 @@ class Handler extends ExceptionHandler
                 ->withMessage($exception->validator->errors()->first());
 
             return response($error, Response::HTTP_BAD_REQUEST);
+        }
+
+        if ($exception instanceof ModelNotFoundException) {
+            $id = Arr::first($exception->getIds());
+            $model = Arr::last(explode("\\", $exception->getModel()));
+
+            $replace = ['model' => $model, 'id' => $id];
+            $messages = trans('messages.record_not_found', $replace);
+
+            $error = (new Error())
+                ->withShortMessage('record_not_found')
+                ->withMessage($messages);
+
+            return response($error, Response::HTTP_NOT_FOUND);
         }
 
         return parent::render($request, $exception);
