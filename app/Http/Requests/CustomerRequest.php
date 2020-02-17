@@ -22,20 +22,9 @@ class CustomerRequest extends FormRequest
             case RequestAction::UPDATE:
                 return $this->onUpdate();
                 break;
-            case RequestAction::SHOW:
-            case RequestAction::DELETE:
-                return ['id' => 'bail|integer|required|exists:customers,id'];
-                break;
             default:
                 return [];
         }
-    }
-
-    public function all($keys = null)
-    {
-        $data       = parent::all($keys);
-        $data['id'] = $this->route('id');
-        return $data;
     }
 
     private function onStore()
@@ -50,7 +39,6 @@ class CustomerRequest extends FormRequest
     private function onUpdate()
     {
         return [
-            'id'         => 'bail|integer|required|exists:customers,id',
             'first_name' => 'bail|string|sometimes',
             'last_name'  => 'bail|string|sometimes',
             'email'      => 'bail|string|sometimes|unique:customers,email|max:255|email'
