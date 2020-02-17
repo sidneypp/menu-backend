@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
@@ -16,11 +17,13 @@ class Order extends Model
     ];
 
     protected $hidden = [
+        'customer_id',
+        'updated_at',
         'deleted_at'
     ];
 
-    public function customer()
+    public function customer(): BelongsTo
     {
-        $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class);
     }
 }
