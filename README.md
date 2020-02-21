@@ -46,4 +46,4 @@ Esse desafio tem como objetivo testar seu domínio sobre Desenvolvimento Full St
 -   Execute `docker exec -it app composer install` para instalar todas as dependências
 -   Execute `docker exec -it app php artisan migrate` para criar as tabelas
 -   Finalmente execute `docker exec -it app php artisan db:seed` para popular as tabelas
--   Se tudo funcionou corretamente, você pode navegar para `http://localhost:8080/` 🚀
+-   Se tudo funcionou corretamente, você pode navegar para `http://localhost` 🚀
