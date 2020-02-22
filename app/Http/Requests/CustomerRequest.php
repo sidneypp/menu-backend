@@ -41,7 +41,7 @@ class CustomerRequest extends FormRequest
         return [
             'first_name' => 'bail|string|sometimes',
             'last_name'  => 'bail|string|sometimes',
-            'email'      => 'bail|string|sometimes|unique:customers,email|max:255|email'
+            'email'      => "bail|string|sometimes|unique:customers,email,$this->id|max:255|email"
         ];
     }
 }
