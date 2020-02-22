@@ -50,7 +50,7 @@ class OrderRequest extends FormRequest
                 Rule::in(OrderStatus::NEW, OrderStatus::DELIVERED, OrderStatus::PENDING)
             ],
             'customer_id' => 'integer|sometimes|exists:customers,id',
-            'value'       => 'integer|sometimes'
+            'value'       => 'numeric|sometimes'
         ];
     }
 }
