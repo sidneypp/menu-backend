@@ -13,7 +13,8 @@ class Order extends Model
     protected $fillable = [
         'status',
         'customer_id',
-        'value'
+        'value',
+        'created_at'
     ];
 
     protected $hidden = [
@@ -25,15 +26,5 @@ class Order extends Model
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
-    }
-
-    public function getValueAttribute()
-    {
-        return $this->attributes['value'] / 100;
-    }
-
-    public function setValueAttribute($value)
-    {
-        $this->attributes['value'] = $value * 100;
     }
 }

@@ -13,7 +13,8 @@ class Customer extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'email'
+        'email',
+        'created_at'
     ];
 
     protected $hidden = [

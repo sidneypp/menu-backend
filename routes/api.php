@@ -16,3 +16,11 @@ Route::prefix('orders')->group(function (): void {
     Route::delete('/{id}', 'OrderController@delete');
 });
 
+Route::prefix('statistics')->group(function (): void {
+    Route::get('/customers-gained', 'StatisticsController@customersGained');
+    Route::get('/revenue-generated', 'StatisticsController@revenueGenerated');
+    Route::get('/orders-received', 'StatisticsController@ordersReceived');
+    Route::get('/orders-rejected', 'StatisticsController@ordersRejected');
+    Route::get('/revenue-comparison', 'StatisticsController@revenueComparison');
+    Route::get('/orders-delivered', 'StatisticsController@ordersDelivered');
+});
