@@ -8,7 +8,7 @@ class CustomerTableSeeder extends Seeder
 {
     public function run(): void
     {
-        factory(Customer::class, 50)->create()->each(function (Customer $customer): void {
+        factory(Customer::class, 1000)->create()->each(function (Customer $customer): void {
             $customer->orders()->save(factory(Order::class)->make());
         });
     }

@@ -34,7 +34,7 @@ class OrderRequest extends FormRequest
             'status'      => [
                 'string',
                 'sometimes',
-                Rule::in(OrderStatus::NEW, OrderStatus::DELIVERED, OrderStatus::PENDING)
+                Rule::in(OrderStatus::PENDING, OrderStatus::DELIVERED, OrderStatus::REJECTED)
             ],
             'customer_id' => 'integer|required|exists:customers,id',
             'value'       => 'integer|required'
@@ -47,7 +47,7 @@ class OrderRequest extends FormRequest
             'status'      => [
                 'string',
                 'sometimes',
-                Rule::in(OrderStatus::NEW, OrderStatus::DELIVERED, OrderStatus::PENDING)
+                Rule::in(OrderStatus::PENDING, OrderStatus::DELIVERED, OrderStatus::REJECTED)
             ],
             'customer_id' => 'integer|sometimes|exists:customers,id',
             'value'       => 'numeric|sometimes'

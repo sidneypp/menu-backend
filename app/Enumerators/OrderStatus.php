@@ -4,7 +4,7 @@ namespace App\Enumerators;
 
 final class OrderStatus
 {
-    const NEW = 'NEW';
-    const DELIVERED = 'DELIVERED';
     const PENDING = 'PENDING';
+    const DELIVERED = 'DELIVERED';
+    const REJECTED = 'REJECTED';
 }
