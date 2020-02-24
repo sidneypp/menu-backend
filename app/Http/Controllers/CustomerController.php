@@ -11,7 +11,7 @@ class CustomerController extends Controller
 {
     public function index(): Response
     {
-        return $this->respondWith(Customer::paginate(10));
+        return $this->respondWith(Customer::all());
     }
 
     public function store(CustomerRequest $request): Response
