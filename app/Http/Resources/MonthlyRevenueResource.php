@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 use NumberFormatter;
 
-class RenenueComparisonResource extends JsonResource
+class MonthlyRevenueResource extends JsonResource
 {
     public function toArray($request): array
     {
@@ -17,7 +17,7 @@ class RenenueComparisonResource extends JsonResource
         });
         $sliceOrdersInEight = $ordersGroupedByDate->slice(0, 8);
         $sumOfOrderValuesByDate = $sliceOrdersInEight->map(function ($orders) {
-            return round($orders->sum('value'));
+            return round($orders->sum('value'), 2);
         });
         $orderDays = $sumOfOrderValuesByDate->keys()->map(function ($day) {
             return Carbon::parse($day)->day;
@@ -27,7 +27,7 @@ class RenenueComparisonResource extends JsonResource
                 [
                     'name' => trans('constants.thisMonth'),
                     'data' => $sumOfOrderValuesByDate->flatten()
-                ],
+                ]
             ],
             'analyticsData' => [
                 'thisMonth' => $formatter->formatCurrency($ordersValuesSum, 'BRL'),

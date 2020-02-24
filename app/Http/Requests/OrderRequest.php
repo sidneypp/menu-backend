@@ -37,7 +37,7 @@ class OrderRequest extends FormRequest
                 Rule::in(OrderStatus::PENDING, OrderStatus::DELIVERED, OrderStatus::REJECTED)
             ],
             'customer_id' => 'integer|required|exists:customers,id',
-            'value'       => 'integer|required'
+            'value'       => 'numeric|required'
         ];
     }
 

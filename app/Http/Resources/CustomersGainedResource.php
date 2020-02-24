@@ -23,7 +23,9 @@ class CustomersGainedResource extends JsonResource
                     })->flatten()
                 ]
             ],
-            'customers' => $customersCount
+            'analyticsData' => [
+                'customers' => $customersCount
+            ]
         ];
     }
 }

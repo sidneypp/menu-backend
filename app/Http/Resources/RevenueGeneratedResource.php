@@ -10,8 +10,8 @@ class RevenueGeneratedResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $formatter = new NumberFormatter('pt_BR',  NumberFormatter::CURRENCY);
-        $ordersValuesSum = round($this->resource->sum('value'));
+        $formatter = new NumberFormatter('pt_BR', NumberFormatter::CURRENCY);
+        $ordersValuesSum = round($this->resource->sum('value'), 2);
         $ordersGroupedByDate = $this->resource->groupBy(function ($item) {
             return Carbon::parse($item->created_at)->toDateString();
         });
@@ -21,11 +21,13 @@ class RevenueGeneratedResource extends JsonResource
                 [
                     'name' => trans('constants.revenue'),
                     'data' => $sliceOrdersInFive->map(function ($orders) {
-                        return round($orders->sum('value'));
+                        return round($orders->sum('value'), 2);
                     })->flatten()
                 ]
             ],
-            'revenues' => $formatter->formatCurrency($ordersValuesSum, 'BRL')
+            'analyticsData' => [
+                'revenues' => $formatter->formatCurrency($ordersValuesSum, 'BRL')
+            ]
         ];
     }
 }

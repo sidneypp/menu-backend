@@ -23,7 +23,9 @@ class OrdersReceivedResource extends JsonResource
                     })->flatten()
                 ]
             ],
-            'orders' => $ordersCount
+            'analyticsData' => [
+                'orders' => $ordersCount
+            ]
         ];
     }
 }

@@ -7,7 +7,7 @@ use App\Http\Resources\CustomersGainedResource;
 use App\Http\Resources\OrdersDeliveredResource;
 use App\Http\Resources\OrdersReceivedResource;
 use App\Http\Resources\OrdersRejectedResource;
-use App\Http\Resources\RenenueComparisonResource;
+use App\Http\Resources\MonthlyRevenueResource;
 use App\Http\Resources\RevenueGeneratedResource;
 use App\Models\Customer;
 use App\Models\Order;
@@ -45,12 +45,12 @@ class StatisticsController extends Controller
         return new OrdersReceivedResource($ordersOrderedByDate);
     }
 
-    public function revenueComparison()
+    public function monthlyRevenue()
     {
         $ordersThisMonth = Order::query()
             ->orderBy('created_at', 'desc')
             ->whereMonth('created_at', Carbon::now()->month)->get();
-        return new RenenueComparisonResource($ordersThisMonth);
+        return new MonthlyRevenueResource($ordersThisMonth);
     }
 
     public function ordersDelivered()
