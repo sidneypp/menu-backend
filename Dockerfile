@@ -6,28 +6,34 @@ COPY composer.lock composer.json /var/www/
 # Set working directory
 WORKDIR /var/www
 
+# Download script to install PHP extensions and dependencies
+ADD https://raw.githubusercontent.com/mlocati/docker-php-extension-installer/master/install-php-extensions /usr/local/bin/
+
+RUN chmod uga+x /usr/local/bin/install-php-extensions && sync
+
 # Install dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    default-mysql-client \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    locales \
-    zip \
-    jpegoptim optipng pngquant gifsicle \
-    vim \
-    unzip \
-    git \
-    curl
-
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-# Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-RUN docker-php-ext-install gd
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
+      curl \
+      git \
+    && install-php-extensions \
+      bcmath \
+      bz2 \
+      calendar \
+      exif \
+      gd \
+      intl \
+      ldap \
+      memcached \
+      mysqli \
+      opcache \
+      pdo_mysql \
+      pdo_pgsql \
+      pgsql \
+      redis \
+      soap \
+      xsl \
+      zip
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
